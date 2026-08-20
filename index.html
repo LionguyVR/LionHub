@@ -45,6 +45,7 @@
     max-width: 420px;
   }
 
+  /* --- Avatar + ring signature --- */
   .avatar-wrap {
     position: relative;
     width: 128px;
@@ -96,6 +97,7 @@
     white-space: nowrap;
   }
 
+  /* --- Header text --- */
   h1 {
     font-family: 'Chakra Petch', sans-serif;
     font-size: 26px;
@@ -113,6 +115,7 @@
     line-height: 1.5;
   }
 
+  /* --- Gate step --- */
   .gate {
     background: var(--panel);
     border: 1px solid var(--line);
@@ -181,6 +184,12 @@
     color: var(--muted);
   }
 
+  .btn-verify[aria-disabled="true"] {
+    opacity: 0.45;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
   .btn-verify.armed {
     color: var(--text);
     border-color: var(--accent-2);
@@ -215,17 +224,28 @@
 
     <div class="gate">
       <div class="gate-label"><span class="step-num">1</span> Subscribe on YouTube</div>
-      <a class="btn btn-primary" href="https://youtube.com/@LionguyVR?sub_confirmation=1" target="_blank" rel="noopener">
+      <a class="btn btn-primary" href="https://youtube.com/@LionguyVR?sub_confirmation=1" target="_blank" rel="noopener" onclick="enableVerify()">
         Subscribe on YouTube
       </a>
     </div>
 
     <div class="gate">
       <div class="gate-label"><span class="step-num">2</span> Check verification</div>
-      <a class="btn btn-verify armed" href="links.html">Check Verification</a>
-      <p class="hint">You'll be taken to the links page</p>
+      <a class="btn btn-verify" id="verifyBtn" href="links.html" aria-disabled="true">Check Verification</a>
+      <p class="hint" id="hintText">Complete step 1 first</p>
     </div>
   </div>
+
+  <script>
+    function enableVerify() {
+      const btn = document.getElementById('verifyBtn');
+      const hint = document.getElementById('hintText');
+      btn.removeAttribute('aria-disabled');
+      btn.classList.add('armed');
+      hint.textContent = "You'll be taken to the links page";
+      hint.classList.add('ok');
+    }
+  </script>
 
 </body>
 </html>
